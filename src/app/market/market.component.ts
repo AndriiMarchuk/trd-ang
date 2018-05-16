@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Stock} from '../Stock';
+import { MarketServiceImpl} from './market.service';
 
 @Component({
   selector: 'app-market',
@@ -9,19 +10,20 @@ import {Stock} from '../Stock';
 export class MarketComponent implements OnInit {
   stocks: Stock[];
 
-  ngOnInit() {
-    this.stocks = this.getMockStocks();
+  constructor(private marketService: MarketServiceImpl) {
+    this.stocks = [];
   }
 
-  private getMockStocks(): Stock[] {
-    const stocks: Stock[] = [];
-    stocks.push(new Stock('BA', 'Boeing'));
-    stocks.push(new Stock('CAT', 'Caterpillar'));
-    stocks.push(new Stock('KO', 'Coca-Cola'));
-    return stocks;
+  ngOnInit() {
+    this.updateStocks();
+  }
+
+  private updateStocks() {
+    this.stocks = this.marketService.getStocks();
   }
 
   add(symbol: string, company: string) {
-    this.stocks.push(new Stock(symbol, company));
+    this.marketService.add(symbol, company);
+    this.updateStocks();
   }
 }
