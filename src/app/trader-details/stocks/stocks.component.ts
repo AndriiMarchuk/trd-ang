@@ -25,22 +25,25 @@ export class StocksComponent implements OnInit {
 
   ngOnInit() {
     this.stocks = this.marketService.getStocks();
+    // console.log(this.stocks.length);
     this.filteredStocks = this.stockInput.valueChanges
       .pipe(
         startWith(null)
         , map(val => val ? this.filter(val) : this.stocks.slice()));
+
     this.stockInput.valueChanges
       .pipe(
-        startWith(null),
-        map(symbol => {
-          const stock = this.findStock(symbol);
-          if (stock != null) {
-            this.selected = stock;
-            this.onStockSelect.emit(stock);
-          } else {
-            this.selected = null;
-          }
-        })).subscribe();
+        startWith(null)
+       ).subscribe((symbol) =>
+    {
+      const stock = this.findStock(symbol);
+      if (stock != null) {
+        this.selected = stock;
+        this.onStockSelect.emit(stock);
+      } else {
+        this.selected = null;
+      }
+    });
   }
 
   filter(val: string): Stock[] {
