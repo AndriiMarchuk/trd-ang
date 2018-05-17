@@ -15,8 +15,9 @@ export class MarketServiceImpl implements MarketService {
     this.stocks = [];
     this.getStockData().subscribe(
       data => {
-        for (let md of data) {
+        for (const md of data) {
           this.stocks.push(new Stock(md.symbol, md.company, this));
+          console.log(`Loaded company: ${md.company}`);
         }
       },
       error => {
@@ -68,6 +69,11 @@ export class MarketServiceImpl implements MarketService {
     return null;
   }
 
+  closeTrade(trade: Trade) {
+    const stock: Stock = trade.getStock();
+    trade.close(stock.getPrice());
+  }
+
   private getStock(symbol: string): Stock {
     return this.stocks.find(stock => stock.getSymbol() === symbol);
   }
@@ -81,6 +87,7 @@ export interface MarketService {
   getStocks(): Stock[];
 
   addStock(symbol: string, company: string);
+
   buyStock(symbol: string, count: number): Trade;
 }
 

@@ -4,7 +4,8 @@
     <input #name type="text" class="form-control" id="name" placeholder="Oleg">
   </div>
   <button class="btn btn-default" (click)="add(name.value); name.value='';">Add
-    Trader</button>
+    Trader
+  </button>
 </div>
 <br><br>
 
@@ -18,7 +19,8 @@
       <th>Total PnL</th>
     </tr>
     <tr *ngFor="let trader of traders">
-      <td>{{trader.getName()}}</td>
+      <td><a routerLink="/traders/details/{{trader.getName()}}"
+             routerLinkActive="true">{{trader.getName()}}</a></td>
       <td>{{trader.getUnreleasedPnL()}}</td>
       <td>{{trader.getReleasedPnL()}}</td>
       <td>{{trader.getTotalPnL()}}</td>
