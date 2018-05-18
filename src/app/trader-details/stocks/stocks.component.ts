@@ -11,6 +11,7 @@ import {map, startWith} from 'rxjs/operators';
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.css']
 })
+
 export class StocksComponent implements OnInit {
   stockInput = new FormControl();
   filteredStocks: Observable<Stock[]>;
