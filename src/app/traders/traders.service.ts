@@ -33,4 +33,8 @@ export class TradersService {
         resolve(Promise.resolve(this.traders.find(t => name === t.getName()))), 0);
     });
   }
+
+  getTradersInstant(): Trader[] {
+    return this.traders;
+  }
 }
